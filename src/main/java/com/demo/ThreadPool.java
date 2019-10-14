@@ -13,8 +13,36 @@ import java.util.concurrent.Executors;
  * @Version: 1.0
  */
 public class ThreadPool {
+    public static void main(String[] args) throws InterruptedException {
 
-    public static void main(String[] args){
-        ExecutorService executorService = Executors.newFixedThreadPool(20);
+        final Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName() + " run 1");
+            }
+        }, "T1");
+        final Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName() + " run 2");
+            }
+        }, "T2");
+        final Thread t3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName() + " run 3");
+            }
+        }, "T3");
+
+
+//        method 2 使用 单个任务的线程池来实现。保证线程的依次执行
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(t3);
+        executor.submit(t1);
+        executor.submit(t2);
+
+        executor.shutdown();
     }
+
+
 }
