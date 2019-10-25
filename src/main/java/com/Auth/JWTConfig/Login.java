@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @ProjectName: springmvc
@@ -53,8 +55,8 @@ public class Login {
     }
     //处理登录
     @RequestMapping(value="login")
-    public ResponseData login(HttpServletRequest request, @RequestParam( "userName") String userName,
-                       @RequestParam("password") String password) {
+    public ResponseData login(HttpServletRequest request, HttpServletResponse response, @RequestParam( "userName") String userName,
+                              @RequestParam("password") String password) {
         Login login = new Login();
         login.setUserName(userName);
         login.setPassword(password);
@@ -66,7 +68,9 @@ public class Login {
             login.setId(loginId);
             //给用户jwt加密生成token
             String token = JWT.sign(login, 60L* 1000L* 30L);
+            Cookie sessionId = new Cookie("sessionId",token);
             //封装成对象返回给客户端
+            response.addCookie(sessionId);
             responseData.putDataValue("loginId", login.getId());
             responseData.putDataValue("token", token);
             responseData.putDataValue("user", user);
