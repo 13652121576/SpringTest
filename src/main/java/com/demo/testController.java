@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -25,7 +27,9 @@ import java.util.ArrayList;
 public class testController {
     @RequestMapping("/hi")
     @ResponseBody
-    public String show(){
+    public String show(HttpServletRequest request,HttpServletResponse response){
+        System.out.println(request.toString());
+        System.out.println(response.toString());
         System.out.println("welcome");
         return "index";
     }

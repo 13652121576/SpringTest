@@ -68,7 +68,7 @@ public class Login {
             login.setId(loginId);
             //给用户jwt加密生成token
             String token = JWT.sign(login, 60L* 1000L* 30L);
-            Cookie sessionId = new Cookie("sessionId",token);
+            Cookie sessionId = new Cookie("token_sessionId",token);
             //封装成对象返回给客户端
             response.addCookie(sessionId);
             responseData.putDataValue("loginId", login.getId());

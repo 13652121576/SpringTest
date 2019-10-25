@@ -5,6 +5,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONObject;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,8 +27,24 @@ public class TokenInterceptor implements HandlerInterceptor{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
         response.setCharacterEncoding("utf-8");
-        String token = request.getParameter("token");
+        String token =null;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null && cookies.length > 0){
+            for (Cookie cookie : cookies){
+                if(cookie.getName().equals("token_sessionId")){
+                    token=cookie.getValue();
+                }
+            }
+        }
         ResponseData responseData = ResponseData.ok();
+        System.out.println("URI()"+request.getRequestURI());
+        System.out.println("URL()"+request.getRequestURL());
+        System.out.println("Method()"+request.getMethod());
+        System.out.println("ContextPath()"+request.getContextPath());
+        System.out.println("Session()"+request.getSession(false));
+        if(request.getRequestURI().equals("/admin/hi")){
+            return true;
+        }
         //token不存在
         if(null != token) {
             Login login = JWT.unsign(token, Login.class);
