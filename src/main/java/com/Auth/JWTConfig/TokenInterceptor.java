@@ -51,6 +51,7 @@ public class TokenInterceptor implements HandlerInterceptor{
             String loginId = request.getParameter("loginId");
             //解密token后的loginId与用户传来的loginId不一致，一般都是token过期
             if(null != loginId && null != login) {
+                JWT.sign(login, 1000L* 10L);
                 if(Integer.parseInt(loginId) == login.getId()) {
                     return true;
                 } else {

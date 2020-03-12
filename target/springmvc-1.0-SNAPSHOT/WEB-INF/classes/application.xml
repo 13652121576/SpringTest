@@ -4,4 +4,5 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" default-autowire="byName">
 
     <bean id="person" class="com.demo.pojo.Person"/>
+    <import resource="springmvc-servlet.xml"></import>
 </beans>

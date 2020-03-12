@@ -1,6 +1,7 @@
 package com.demo;
 
 import net.sf.json.JSONObject;
+import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -9,7 +10,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ import java.util.List;
  * @Version: 1.0
  */
 
-public class demo {
+public class demo implements ApplicationContextAware{
 
 
     /**
@@ -242,6 +245,16 @@ public class demo {
 
     }
 
+    private  ApplicationContext aa;
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.aa = applicationContext;
+    }
+    public <T> int getBean(Class<T> clazz ){
+        int beanDefinitionCount = aa.getBeanDefinitionCount();
+        System.out.println(beanDefinitionCount);
+        return beanDefinitionCount;
+    }
 }
 
 
